@@ -1,0 +1,42 @@
+---
+import SocialPill from "./SocialPill.astro";
+import EmaiIcon from "./icons/EmaiIcon.astro";
+
+import TelegramIcon from "./icons/TelegramIcon.astro";
+import WhatsAppIcon from "./icons/WhatsAppIcon.astro";
+---
+
+<footer
+  class="rounded-lg shadow m-4 bg-black/20 backdrop:blur-lg w-full xl:w-[1120px] mx-auto mb-10"
+>
+  <div
+    class="w-full mx-auto max-w-screen-xl p-4 md:flex md:items-center md:justify-between"
+  >
+    <span class="text-sm sm:text-center text-yellow-100"
+      >© 2024 <a href="https://flowbite.com/" class="hover:underline"></a>. All
+      Rights Reserved.
+    </span>
+    <ul
+      class="flex flex-wrap items-center text-sm font-medium text-white/90 sm:mt-0"
+    >
+      <li class="mx-2 my-2">
+        <SocialPill href="mailto:mauriciogaraco@gmail.com">
+          <EmaiIcon class="size-2" />
+          mauriciogaraco@gmail.com
+        </SocialPill>
+      </li>
+      <li class="mx-2 my-2">
+        <SocialPill href="https://wa.me/qr/C2LAGVUXKDDUO1">
+          <WhatsAppIcon class="size-6" />
+          WhatsApp
+        </SocialPill>
+      </li>
+      <li class="mx-2 my-2">
+        <SocialPill href="https://t.me/Mauricio_dev">
+          <TelegramIcon class="size-3" />
+          Telegram
+        </SocialPill>
+      </li>
+    </ul>
+  </div>
+</footer>

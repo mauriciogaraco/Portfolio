@@ -1,0 +1,137 @@
+---
+import celebrenImage from "../assests/celebren/celebren16x9.png";
+import Jump2BotImage from "../assests/Jump2Bot.jpg";
+import tecopayImage from "../assests/tecopay.png";
+import dashboardImage from "../assests/dashboard.png";
+import { Galery } from "../components/Galery.tsx";
+import Modal from "./Modal.astro";
+import SocialPill from "./SocialPill.astro";
+import Tecnologies from "./Tecnologies.astro";
+import ReactNative from "./icons/skills/ReactNative.astro";
+import TailwindIcon from "./icons/skills/TailwindIcon.astro";
+import ReduxIcon from "./icons/skills/ReduxIcon.astro";
+import TypescriptIcon from "./icons/skills/TypescriptIcon.astro";
+import FlutterIcon from "./icons/skills/Fultter.astro";
+
+//@ts-ignore
+
+const Tags = {
+  REACT: {
+    name: "React.js",
+    icon: ReactNative,
+  },
+  Native: {
+    name: "React Native",
+    icon: ReactNative,
+  },
+  Tailwind: {
+    name: "Tailwind.css",
+    icon: TailwindIcon,
+  },
+  Redux: {
+    name: "Redux Toolkit",
+    icon: ReduxIcon,
+  },
+  Type: {
+    name: "TypeScript",
+    icon: TypescriptIcon,
+  },
+  Flutter: {
+    name: "Flutter",
+    icon: FlutterIcon,
+  },
+};
+
+//@ts-ignore
+const Project = [
+  {
+    title: "Jump 2 bot",
+    description:
+      "Automate the forwarding of messages from your cell phone directly to Telegram, simplifying your daily life like never before.",
+    link: "https://jump2bot.com",
+    image: Jump2BotImage.src,
+    tags: [Tags.Flutter],
+  },
+  {
+    title: "Celebren",
+    description:
+      "It is an wonderfull online store where you can find a wide variety of products and receive them at home",
+    link: "https://play.google.com/store/apps/details?id=com.threefaces.celebren",
+    image: celebrenImage.src,
+    tags: [Tags.Native, Tags.Redux],
+  },
+  {
+    title: "Tecopay-App",
+    description:
+      "It is a modern app where the user can request point cards, carry out payment operations  via QR code or through NFC",
+    link: "https://play.google.com/store/apps/details?id=com.tecopay.tecopayapp",
+    image: tecopayImage.src,
+    tags: [Tags.Native, Tags.Redux],
+  },
+  {
+    title: "Tecopay-Web",
+    description:
+      "It is an administrative website to manage user cards, allow accounts to be recharged,show statistics and analysis... ",
+    link: "https://paydev.tecopos.com/",
+    image: dashboardImage.src,
+    tags: [Tags.REACT, Tags.Type, Tags.Tailwind],
+  },
+];
+---
+
+{
+  Project.map((project) => (
+    <article class="mb-4 mx-4   ">
+      <div
+        class=" xl:max-w-xs max-w-sm light:bg-white border 
+        lg:h-full
+      light:border-gray-200 rounded-lg shadow bg-gray-800 border-gray-700"
+      >
+        <a class="relative">
+          <div class="absolute bottom-0 right-0 mr-2">
+            {/*  <Galery client:load />*/}
+          </div>
+          <img class="rounded-t-lg w-full  " src={`${project.image}`} alt="" />
+        </a>
+        <div class="p-5">
+          <a>
+            <h5 class="mb-2 text-2xl font-semibold tracking-tight text-yellow-200">
+              {project.title}
+            </h5>
+          </a>
+          <p class="mb-3 font-normal text-lg text-pretty">
+            {project.description}
+          </p>
+          <div class="flex flex-wrap mb-2 ">
+            {project.tags.map((tags: any) => (
+              <Tecnologies>
+                <tags.icon />
+                <h6 class="ml-2">{tags.name}</h6>
+              </Tecnologies>
+            ))}
+          </div>
+          <div class="w-32 flex">
+            <SocialPill href={project.link}>
+              Go
+              <svg
+                class="rtl:rotate-180 w-3.5 h-3.5 ms-2"
+                aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 14 10"
+              >
+                <path
+                  stroke="currentColor"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M1 5h12m0 0L9 1m4 4L9 9"
+                />
+              </svg>
+            </SocialPill>
+          </div>
+        </div>
+      </div>
+    </article>
+  ))
+}

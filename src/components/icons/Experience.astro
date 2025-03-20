@@ -1,0 +1,32 @@
+---
+import ExperienceItem from "./ExperienceItem.astro";
+
+//@ts-ignore
+const Exp = [
+  {
+    title: "FullStack Developer - Dissau",
+    date: "May 2024",
+    description:
+      " I lead the creation of functional websites focused on e-commerce and online sales, integrating multiple payment methods to improve the user experience and maximize conversions.",
+    link: "https://www.dissau.net/",
+  },
+  {
+    title: "Mobile/web developer - Tecopos",
+    date: "October 2023",
+    description:
+      " Performance analysis of created applications. Diagnosis and resolution of technical incidents. ",
+    link: "https://www.tecopos.com/",
+  },
+];
+---
+
+<ol class="relative border-s border-gray-200 dark:border-gray-700 ml-3">
+  {
+    Exp.map((exp: any) => (
+      <li class="mb-10 ms-4">
+        <ExperienceItem {...exp} />
+      </li>
+    ))
+  }
+  <li class="mb-10 ms-4"></li>
+</ol>
