@@ -18,22 +18,6 @@ import Download from "../components/Download.astro";
 import DownloandIcon from "../components/icons/DownloandIcon.astro";
 ---
 
-<script>
-  function downloadPDF() {
-    const pdf = new Blob(["Contenido de tu CV aquí"], {
-      type: "application/pdf",
-    });
-    const url = URL.createObjectURL(pdf);
-    const a = document.createElement("a");
-    a.href = url;
-    a.download = "mi_cv.pdf";
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-    URL.revokeObjectURL(url);
-  }
-</script>
-
 <Layout
   title="Portafolio de Mauricio García Acosta - Desarrollador y programador Web"
 >
