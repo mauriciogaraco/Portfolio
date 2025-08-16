@@ -1,0 +1,63 @@
+---
+interface Props {
+  size?: number; // px
+  animated?: boolean; // true = hace el gesto de saludo
+  class?: string; // tailwind extras (márgenes, etc.)
+  label?: string; // accesible: aria-label
+  fontFamily?: string; // por si quieres forzar una fuente emoji
+}
+const {
+  size = 28,
+  animated = true,
+  class: cls = "",
+  label = "Waving hand",
+  fontFamily = `'Apple Color Emoji','Segoe UI Emoji','Noto Color Emoji',system-ui,sans-serif`,
+} = Astro.props;
+---
+
+<svg
+  width={size}
+  height={size}
+  viewBox="0 0 24 24"
+  role="img"
+  aria-label={label}
+  class={`inline-block ${animated ? "wave" : ""} ${cls}`}
+  xmlns="http://www.w3.org/2000/svg"
+>
+  <!-- Centramos el emoji dentro del SVG -->
+  <g style="transform-origin: 60% 35%;">
+    <text
+      x="50%"
+      y="50%"
+      dominant-baseline="middle"
+      text-anchor="middle"
+      font-size="18"
+      style={`font-family:${fontFamily};`}
+    >
+      👋
+    </text>
+  </g>
+
+  <style is:inline>
+    .wave {
+      animation: wave 1.2s ease-in-out infinite;
+    }
+    @keyframes wave {
+      0%,
+      100% {
+        transform: rotate(0deg);
+      }
+      20% {
+        transform: rotate(-13deg);
+      }
+      60% {
+        transform: rotate(9deg);
+      }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .wave {
+        animation: none;
+      }
+    }
+  </style>
+</svg>

@@ -1,137 +1,95 @@
 ---
-import celebrenImage from "../assests/celebren/celebren16x9.png";
-import Jump2BotImage from "../assests/Jump2Bot.jpg";
-import tecopayImage from "../assests/tecopay.png";
-import dashboardImage from "../assests/dashboard.png";
-import { Galery } from "../components/Galery.tsx";
-import Modal from "./Modal.astro";
+import { projects } from "../data/projects";
 import SocialPill from "./SocialPill.astro";
-import Tecnologies from "./Tecnologies.astro";
-import ReactNative from "./icons/skills/ReactNative.astro";
-import TailwindIcon from "./icons/skills/TailwindIcon.astro";
-import ReduxIcon from "./icons/skills/ReduxIcon.astro";
-import TypescriptIcon from "./icons/skills/TypescriptIcon.astro";
-import FlutterIcon from "./icons/skills/Fultter.astro";
-
-//@ts-ignore
-
-const Tags = {
-  REACT: {
-    name: "React.js",
-    icon: ReactNative,
-  },
-  Native: {
-    name: "React Native",
-    icon: ReactNative,
-  },
-  Tailwind: {
-    name: "Tailwind.css",
-    icon: TailwindIcon,
-  },
-  Redux: {
-    name: "Redux Toolkit",
-    icon: ReduxIcon,
-  },
-  Type: {
-    name: "TypeScript",
-    icon: TypescriptIcon,
-  },
-  Flutter: {
-    name: "Flutter",
-    icon: FlutterIcon,
-  },
-};
-
-//@ts-ignore
-const Project = [
-  {
-    title: "Jump 2 bot",
-    description:
-      "Automate the forwarding of messages from your cell phone directly to Telegram, simplifying your daily life like never before.",
-    link: "https://jump2bot.com",
-    image: Jump2BotImage.src,
-    tags: [Tags.Flutter],
-  },
-  {
-    title: "Celebren",
-    description:
-      "It is an wonderfull online store where you can find a wide variety of products and receive them at home",
-    link: "https://play.google.com/store/apps/details?id=com.threefaces.celebren",
-    image: celebrenImage.src,
-    tags: [Tags.Native, Tags.Redux],
-  },
-  {
-    title: "Tecopay-App",
-    description:
-      "It is a modern app where the user can request point cards, carry out payment operations  via QR code or through NFC",
-    link: "https://play.google.com/store/apps/details?id=com.tecopay.tecopayapp",
-    image: tecopayImage.src,
-    tags: [Tags.Native, Tags.Redux],
-  },
-  {
-    title: "Tecopay-Web",
-    description:
-      "It is an administrative website to manage user cards, allow accounts to be recharged,show statistics and analysis... ",
-    link: "https://paydev.tecopos.com/",
-    image: dashboardImage.src,
-    tags: [Tags.REACT, Tags.Type, Tags.Tailwind],
-  },
-];
+import ArrowLeftIcon from "./icons/ArrowLeftIcon.astro";
 ---
 
-{
-  Project.map((project) => (
-    <article class="mb-4 mx-4   ">
-      <div
-        class=" xl:max-w-xs max-w-sm light:bg-white border 
-        lg:h-full
-      light:border-gray-200 rounded-lg shadow bg-gray-800 border-gray-700"
-      >
-        <a class="relative">
-          <div class="absolute bottom-0 right-0 mr-2">
-            {/*  <Galery client:load />*/}
-          </div>
-          <img class="rounded-t-lg w-full  " src={`${project.image}`} alt="" />
-        </a>
-        <div class="p-5">
-          <a>
-            <h5 class="mb-2 text-2xl font-semibold tracking-tight text-yellow-200">
-              {project.title}
-            </h5>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+  {projects.map((project) => (
+    <article class="mb-6 group">
+      <div class="relative rounded-2xl bg-gradient-to-tr from-yellow-200/40 via-yellow-500/20 to-transparent p-[1px]">
+        <div
+          class="rounded-2xl bg-gray-900/90 light:bg-white light:shadow-sm border border-white/5 light:border-gray-200
+                 transition-all duration-300 ease-out hover:shadow-2xl hover:shadow-yellow-500/10 hover:scale-[1.01] motion-safe:transform"
+        >
+          <!-- Link de portada -->
+          <a
+            href={`/projects/${project.key}`}
+            class="block relative rounded-t-2xl focus:outline-none focus-visible:ring-2 focus-visible:ring-yellow-400"
+            rel="prefetch-intent"
+            aria-label={`Ver detalles de ${project.title}`}
+          >
+            <div class="relative overflow-hidden rounded-t-2xl">
+              <img
+                src={project.image}
+                alt={project.title}
+                class="h-48 w-full object-cover"
+                loading="lazy"
+                decoding="async"
+                fetchpriority="low"
+              />
+              <!-- overlay para contraste del título si lo colocas encima -->
+              <div class="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+            </div>
           </a>
-          <p class="mb-3 font-normal text-lg text-pretty">
-            {project.description}
-          </p>
-          <div class="flex flex-wrap mb-2 ">
-            {project.tags.map((tags: any) => (
-              <Tecnologies>
-                <tags.icon />
-                <h6 class="ml-2">{tags.name}</h6>
-              </Tecnologies>
-            ))}
-          </div>
-          <div class="w-32 flex">
-            <SocialPill href={project.link}>
-              Go
-              <svg
-                class="rtl:rotate-180 w-3.5 h-3.5 ms-2"
-                aria-hidden="true"
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 14 10"
+
+          <div class="p-5">
+            <h5 class="mb-2 text-xl font-semibold tracking-tight text-yellow-200 light:text-yellow-700">
+              <a
+                href={`/projects/${project.key}`}
+                class="hover:underline focus:outline-none focus-visible:ring-2 focus-visible:ring-yellow-400 rounded"
               >
-                <path
-                  stroke="currentColor"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="M1 5h12m0 0L9 1m4 4L9 9"
-                />
-              </svg>
-            </SocialPill>
+                {project.title}
+              </a>
+            </h5>
+
+            <p class="mb-4 text-sm text-gray-300 light:text-gray-700 line-clamp-3">
+              {project.description}
+            </p>
+
+            <!-- TAGS: marquee infinito derecha→izquierda -->
+            <div class="relative overflow-hidden">
+              <div class="flex gap-2 whitespace-nowrap animate-marquee will-change-transform">
+                {project.tags.map((tags: any) => (
+                  <span class="inline-flex items-center gap-1 rounded-full px-2.5 py-1 text-xs 
+                               ring-1 ring-white/10 light:ring-gray-300 bg-white/5 light:bg-gray-100 
+                               hover:bg-white/10 light:hover:bg-gray-200 transition">
+                    <tags.icon class="size-4 opacity-80" />
+                    <span>{tags.name}</span>
+                  </span>
+                ))}
+                {project.tags.map((tags: any) => (
+                  <span class="inline-flex items-center gap-1 rounded-full px-2.5 py-1 text-xs 
+                               ring-1 ring-white/10 light:ring-gray-300 bg-white/5 light:bg-gray-100 
+                               hover:bg-white/10 light:hover:bg-gray-200 transition">
+                    <tags.icon class="size-4 opacity-80" />
+                    <span>{tags.name}</span>
+                  </span>
+                ))}
+              </div>
+            </div>
+
+            <div class="flex mt-2">
+              <SocialPill
+                href={`/projects/${project.key}`}
+                aria-label={`Ir a ${project.title}`}
+              >
+                Go
+                <ArrowLeftIcon />
+              </SocialPill>
+            </div>
           </div>
         </div>
       </div>
     </article>
-  ))
-}
+  ))}
+</div>
+
+<style>
+  @keyframes marquee {
+    0%   { transform: translateX(0); }
+    100% { transform: translateX(-50%); } /* se mueve la mitad porque duplicamos el contenido */
+  }
+  .animate-marquee { animation: marquee 10s linear infinite; }
+  .animate-marquee:hover { animation-play-state: paused; }
+</style>

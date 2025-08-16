@@ -1,0 +1,27 @@
+---
+import ProjectDetails from "../../components/project/ProjectDetails.astro";
+import Layout from "../../layouts/Layout.astro";
+import { projects } from "../../data/projects";
+
+export async function getStaticPaths() {
+  return projects.map((p) => ({
+    params: { key: p.key },
+    props: { key: p.key },
+  }));
+}
+
+const { key } = Astro.props as { key: string };
+const project = projects.find((p) => p.key === key);
+
+if (!project) {
+  // No debería ocurrir porque getStaticPaths sólo expone keys válidas
+  throw new Error("Project not found");
+}
+
+const pageTitle = `${project.title} — Project`;
+const pageDesc = project.description;
+---
+
+<Layout title={pageTitle} description={pageDesc}>
+  <ProjectDetails project={project} />
+</Layout>

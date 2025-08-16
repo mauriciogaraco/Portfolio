@@ -2,92 +2,123 @@
 import Badge from "../components/Badge.astro";
 import SocialPill from "../components/SocialPill.astro";
 import Layout from "../layouts/Layout.astro";
-import localImage from "../assests/profile.jpg";
+
 import GithubIcon from "../components/icons/GithubIcon.astro";
 import EmaiIcon from "../components/icons/EmaiIcon.astro";
-import TelegramIcon from "../components/icons/TelegramIcon.astro";
-import WhatsAppIcon from "../components/icons/WhatsAppIcon.astro";
+
 import Experience from "../components/icons/Experience.astro";
 import BriefCaseIcon from "../components/icons/BriefCaseIcon.astro";
 import CodeIcon from "../components/icons/CodeIcon.astro";
 import SectionContainer from "../components/SectionContainer.astro";
 import Footer from "../components/Footer.astro";
 import Projects from "../components/Projects.astro";
-import About from "../components/About.astro";
+
 import Download from "../components/Download.astro";
 import DownloandIcon from "../components/icons/DownloandIcon.astro";
+import HandSvg from "../components/icons/HandSvg.astro";
 ---
 
 <Layout
   title="Portafolio de Mauricio García Acosta - Desarrollador y programador Web"
 >
-  <main>
-    <SectionContainer class="py-20">
-      <div class="flex">
-        <img
-          src={localImage.src}
-          alt="profile-photo"
-          class="rounded-full w-14 h-14 mr-2"
-        />
-        <h1
-          class="text-white text-2xl md:text-4xl lg:text-5xl font-bold flex flex-row
-        gap-x-4 pb-6 lg:pb-10"
-        >
-          Hey , I' m Mauricio <a
-            href="mailto:mauriciogaraco@gmail.com"
-            class="flex justify-center items-center"
+  <main role="main" class="px-4">
+    <div id="top"></div>
+
+    <!-- HERO -->
+    <SectionContainer class="pt-16 pb-20 md:pt-24">
+      <div class="flex flex-col gap-6 md:flex-row md:items-center md:gap-8">
+        <div class="max-w-[720px]">
+          <h1
+            class="text-white text-3xl md:text-5xl font-bold tracking-tight flex flex-wrap items-center gap-3 pb-3"
           >
-            <Badge>Ready to work</Badge>
-          </a>
-        </h1>
+            <HandSvg class="text-yellow-200/90" size={48} /> Hey, I’m Mauricio
+
+            <Badge
+              id="ready-badge"
+              href="mailto:mauriciogaraco@gmail.com?subject=Opportunity"
+              variant="success"
+              size="md"
+              dot
+            >
+              Ready to work
+            </Badge>
+          </h1>
+
+          <p class="text-base md:text-lg opacity-90 leading-relaxed">
+            <span class="font-medium"
+              >Front-end-leaning Full-Stack Developer</span
+            >
+            <span class="text-yellow-200/90"> (2+ years).</span>
+            <span class="">
+              I craft fast, accessible web &amp; mobile products—responsive
+              layouts, tasteful micro-interactions, and design-system-driven UI
+            </span>
+            <span class="text-red-200/90"
+              >Based in Havana; open to remote and relocation.</span
+            >
+          </p>
+
+          <nav
+            aria-label="Primary actions"
+            class="flex gap-3 md:gap-4 mt-6 flex-wrap"
+          >
+            <Download>
+              <DownloandIcon />
+              Download CV
+            </Download>
+
+            <SocialPill
+              href="https://github.com/mauriciogaraco/"
+              rel="noopener"
+              aria-label="Visit my GitHub"
+            >
+              <GithubIcon class="size-6" />
+              GitHub
+            </SocialPill>
+
+            <SocialPill
+              href="mailto:mauriciogaraco@gmail.com?subject=Hello%20Mauricio"
+              aria-label="Send me an email"
+            >
+              <EmaiIcon class="size-6" />
+              mauriciogaraco@gmail.com
+            </SocialPill>
+          </nav>
+        </div>
       </div>
-
-      <h2 class="text-xl lg:text-2xl text-wrap max-w-[680px]">
-        <span>+1 year of experience. </span>
-        <span class="text-yellow-200/90">I develop web and mobile app . </span>
-        <span class="text-red-200/90">From Habana , Cuba .</span>
-        <span class="opacity-75"
-          >I am a Front End Developer who specializes in designing and
-          Development of modern websites and native mobile applications.</span
-        >
-      </h2>
-      <nav class="flex gap-4 mt-8 flex-wrap">
-        <Download>
-          <DownloandIcon />
-          Download CV
-        </Download>
-
-        <SocialPill href="https://github.com/mauriciogaraco/">
-          <GithubIcon class="size-6" />
-          Github
-        </SocialPill>
-
-        <SocialPill href="mailto:mauriciogaraco@gmail.com">
-          <EmaiIcon class="size-6" />
-          mauriciogaraco@gmail.com
-        </SocialPill>
-      </nav>
     </SectionContainer>
-    <SectionContainer id="experience">
-      <h2 class="text-2xl font-semibold mb-10 flex gap-x-3">
-        <span class="opacity-80">
-          <BriefCaseIcon class="size-10" /></span
-        >Experience
-      </h2>
 
+    <!-- EXPERIENCE -->
+    <SectionContainer id="experience">
+      <h2
+        class="text-2xl md:text-3xl font-semibold mb-8 flex items-center gap-3 tracking-tight"
+      >
+        <span class="opacity-80"
+          ><BriefCaseIcon class="size-8 md:size-10" /></span
+        >
+        Experience
+      </h2>
       <Experience />
     </SectionContainer>
+
+    <!-- PROJECTS -->
     <SectionContainer id="projects">
-      <h2 class="text-2xl font-semibold mb-10 flex gap-x-3">
-        <span class="opacity-80"> <CodeIcon class="size-10" /></span>Some
-        Projects
+      <h2
+        class="text-2xl md:text-3xl font-semibold mb-8 flex items-center gap-3 tracking-tight"
+      >
+        <span class="opacity-80"><CodeIcon class="size-8 md:size-10" /></span>
+        Selected Projects
       </h2>
+
+      <!-- grid responsiva; evita gaps irregulares -->
       <div class="flex justify-between flex-wrap">
         <Projects />
       </div>
     </SectionContainer>
   </main>
-  <div id="contact">
+
+  <!-- CONTACT -->
+  <div id="contact" class="mt-10">
     <Footer />
   </div>
 </Layout>

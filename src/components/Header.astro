@@ -3,14 +3,117 @@ import localImage from "../assests/profile.jpg";
 import { Theme } from "./Theme";
 ---
 
-<header
-  class="flex justify-center py-5 items-center w-full xl:w-[1120px] mx-auto"
+<!-- salto para accesibilidad -->
+<a
+  href="/#projects"
+  class="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 bg-yellow-400/90 text-black px-3 py-1 rounded"
 >
-  <span></span>
-  <nav class="flex flex-row gap-x-10 opacity-80">
-    <a href="#top" class="hover:text-yellow-100">Home</a>
-    <a href="#experience" class="hover:text-yellow-100">Experience</a>
-    <a href="#projects" class="hover:text-yellow-100">Last Proyects</a>
-    <a href="#contact" class="hover:text-yellow-100">Contact</a>
+  Skip to projects
+</a>
+
+<header
+  class="sticky top-0 z-50 w-full border-b border-white/10 bg-black/25 backdrop-blur-md"
+>
+  <div
+    class="mx-auto max-w-[1120px] px-4 py-3 flex items-center justify-between"
+  >
+    <!-- Logo/Avatar -->
+    <a href="/" class="flex items-center gap-3">
+      <div class="w-9 h-9 rounded-full overflow-hidden ring-1 ring-white/20">
+        <img
+          src={localImage.src}
+          alt="Mauricio avatar"
+          class="w-full h-full object-cover"
+        />
+      </div>
+      <span class="hidden sm:block font-semibold tracking-tight">Mauricio</span>
+    </a>
+
+    <!-- Botón mobile -->
+    <button
+      id="menuBtn"
+      class="md:hidden rounded px-2 py-1 ring-1 ring-white/20 hover:ring-white/40"
+      aria-controls="mobileNav"
+      aria-expanded="false"
+    >
+      <span class="sr-only">Open menu</span>
+      <svg viewBox="0 0 24 24" class="w-6 h-6"
+        ><path
+          d="M4 7h16M4 12h16M4 17h16"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"></path></svg
+      >
+    </button>
+
+    <!-- Nav desktop -->
+    <nav
+      class="hidden md:flex items-center gap-8 py-3 opacity-90"
+      aria-label="Primary"
+    >
+      <a class="navlink" href="/">Home</a>
+      <a class="navlink" href="/#experience">Experience</a>
+      <a class="navlink" href="/#projects">Projects</a>
+      <a class="navlink" href="/#contact">Contact</a>
+    </nav>
+  </div>
+
+  <!-- Nav mobile -->
+  <nav id="mobileNav" class="md:hidden hidden px-4 pb-3" aria-label="Primary">
+    <div class="flex flex-col gap-3">
+      <a class="navlink" href="/">Home</a>
+      <a class="navlink" href="/#experience">Experience</a>
+      <a class="navlink" href="/#projects">Projects</a>
+      <a class="navlink" href="/#contact">Contact</a>
+    </div>
   </nav>
 </header>
+
+<style>
+  .navlink {
+    @apply hover:text-yellow-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-yellow-400 rounded;
+  }
+  .navlink[aria-current="true"] {
+    @apply text-yellow-100;
+  }
+</style>
+
+<script>
+  // Toggle mobile
+  const btn = document.getElementById("menuBtn");
+  const mobile = document.getElementById("mobileNav");
+  btn?.addEventListener("click", () => {
+    const open = mobile?.classList.toggle("hidden") === false;
+    btn.setAttribute("aria-expanded", String(open));
+  });
+
+  // Resalta link activo al hacer scroll por secciones
+  const map = new Map([
+    ["#experience", document.querySelector("#experience")],
+    ["#projects", document.querySelector("#projects")],
+    ["#contact", document.querySelector("#contact")],
+  ]);
+  const links = Array.from(document.querySelectorAll("a.navlink"));
+  const setActive = (hash: string | null) => {
+    links.forEach((a) =>
+      a.setAttribute(
+        "aria-current",
+        a.getAttribute("href") === "/" + hash || a.getAttribute("href") === hash
+          ? "true"
+          : hash === "" && a.getAttribute("href") === "/"
+            ? "true"
+            : "false"
+      )
+    );
+  };
+  setActive(location.hash || ""); // estado inicial
+  const io = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((e) => {
+        if (e.isIntersecting) setActive("#" + e.target.id);
+      });
+    },
+    { rootMargin: "-50% 0px -40% 0px", threshold: 0.01 }
+  );
+  map.forEach((el) => el && io.observe(el));
+</script>
