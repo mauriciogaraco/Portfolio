@@ -1,32 +1,37 @@
+# .github/workflows/deploy.yml
 name: Deploy to GitHub Pages
-
 on:
   push:
-    branches:
-      - main  # Reemplaza 'main' por el nombre de tu rama principal si es diferente
+    branches: [ main ]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
 
 jobs:
-  build-and-deploy:
+  build:
     runs-on: ubuntu-latest
-    
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      - name: Set up Node.js
-        uses: actions/setup-node@v4
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
         with:
-          node-version: '20' # Puedes cambiar a la versión de Node.js que uses (ej: '18', '20', etc.)
-
-      - name: Install dependencies
-        run: npm install
-
-      - name: Build project
-        run: npm run build
-
-      - name: Deploy to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v3
+          node-version: '20'
+          cache: 'npm'
+      - run: npm ci
+      - uses: withastro/action@v3
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./dist # Revisa que la carpeta de salida sea 'dist'
-          cname: mauriciogarrido.com # Opcional: si tienes un dominio personalizado
+          node-version: 20
+          # Si usaras dominio propio, puedes pasar: path: "." y luego
+          # crear /public/CNAME con el dominio, o usar otro paso para crearlo.
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4
