@@ -18,7 +18,7 @@ import { Theme } from "./Theme";
     class="mx-auto max-w-[1120px] px-4 py-3 flex items-center justify-between"
   >
     <!-- Logo/Avatar -->
-    <a href="/" class="flex items-center gap-3">
+    <a href=`${import.meta.env.BASE_URL}/` class="flex items-center gap-3">
       <div class="w-9 h-9 rounded-full overflow-hidden ring-1 ring-white/20">
         <img
           src={localImage.src}
@@ -51,10 +51,14 @@ import { Theme } from "./Theme";
       class="hidden md:flex items-center gap-8 py-3 opacity-90"
       aria-label="Primary"
     >
-      <a class="navlink" href="/">Home</a>
-      <a class="navlink" href="/#experience">Experience</a>
-      <a class="navlink" href="/#projects">Projects</a>
-      <a class="navlink" href="/#contact">Contact</a>
+      <a class="navlink" href=`${import.meta.env.BASE_URL}/`>Home</a>
+      <a class="navlink" href=`${import.meta.env.BASE_URL}/#experience`
+        >Experience</a
+      >
+      <a class="navlink" href=`${import.meta.env.BASE_URL}/#projects`
+        >Projects</a
+      >
+      <a class="navlink" href=`${import.meta.env.BASE_URL}/#contact`>Contact</a>
     </nav>
   </div>
 

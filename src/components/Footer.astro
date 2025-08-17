@@ -30,25 +30,22 @@ const year = new Date().getFullYear();
       </SocialPill>
 
       <SocialPill
+        isOutLink={true}
         href="https://wa.me/qr/C2LAGVUXKDDUO1"
-        target="_blank"
-        rel="noopener"
+        isOutLink={true}
       >
         <WhatsAppIcon class="size-5" />
         WhatsApp
       </SocialPill>
 
-      <SocialPill
-        href="https://t.me/Mauricio_dev"
-        target="_blank"
-        rel="noopener"
-      >
+      <SocialPill href="https://t.me/Mauricio_dev" isOutLink={true}>
         <TelegramIcon class="size-5" />
         Telegram
       </SocialPill>
 
-      <a href="/#top" class="ml-1 text-sm hover:text-yellow-100"
-        >Back to top ↑</a
+      <a
+        href=`${import.meta.env.BASE_URL}/#top`
+        class="ml-1 text-sm hover:text-yellow-100">Back to top ↑</a
       >
     </nav>
   </div>

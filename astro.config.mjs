@@ -1,10 +1,13 @@
 // astro.config.mjs
 import { defineConfig } from 'astro/config';
-import react from '@astrojs/react';
+import tailwind from '@astrojs/tailwind';
+import react from '@astrojs/react'; // si usas React
 
 export default defineConfig({
   site: 'https://mauriciogaraco.github.io',
   base: '/Portfolio',
-  integrations: [react()],
-  trailingSlash: 'ignore', // opcional
+  integrations: [
+    tailwind({ config: { applyBaseStyles: true } }),
+    react(), // si corresponde
+  ],
 });

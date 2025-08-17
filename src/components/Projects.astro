@@ -14,7 +14,7 @@ import ArrowLeftIcon from "./icons/ArrowLeftIcon.astro";
         >
           <!-- Link de portada -->
           <a
-            href={`/projects/${project.key}`}
+            href={`${import.meta.env.BASE_URL}/projects/${project.key}`}
             class="block relative rounded-t-2xl focus:outline-none focus-visible:ring-2 focus-visible:ring-yellow-400"
             rel="prefetch-intent"
             aria-label={`Ver detalles de ${project.title}`}
@@ -36,7 +36,7 @@ import ArrowLeftIcon from "./icons/ArrowLeftIcon.astro";
           <div class="p-5">
             <h5 class="mb-2 text-xl font-semibold tracking-tight text-yellow-200 light:text-yellow-700">
               <a
-                href={`/projects/${project.key}`}
+                href={`${import.meta.env.BASE_URL}/projects/${project.key}`}
                 class="hover:underline focus:outline-none focus-visible:ring-2 focus-visible:ring-yellow-400 rounded"
               >
                 {project.title}
@@ -71,7 +71,7 @@ import ArrowLeftIcon from "./icons/ArrowLeftIcon.astro";
 
             <div class="flex mt-2">
               <SocialPill
-                href={`/projects/${project.key}`}
+            href={`${import.meta.env.BASE_URL}/projects/${project.key}`}
                 aria-label={`Ir a ${project.title}`}
               >
                 Go

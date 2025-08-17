@@ -1,19 +1,40 @@
 ---
-interface Prop {
+interface Props {
   href?: string;
+  isOutLink?: boolean; // renombré a camelCase
+  class?: string;
 }
-const { href } = Astro.props;
+
+const {
+  href = "#",
+  isOutLink = false,
+  class: className,
+} = Astro.props as Props;
+
+// Si el link es interno, prefija BASE_URL (GitHub Pages)
+const isExternal =
+  /^(https?:)?\/\//.test(href) ||
+  href.startsWith("mailto:") ||
+  href.startsWith("tel:") ||
+  href.startsWith("#");
+
+const resolvedHref = isExternal
+  ? href
+  : `${import.meta.env.BASE_URL}${href.replace(/^\//, "")}`;
+
+const target = isOutLink ? "_blank" : undefined;
+const rel = isOutLink ? "noopener noreferrer" : undefined;
+
+const baseClass = `
+  bg-white/5 rounded-full border
+  flex justify-center items-center gap-x-2
+  text-xs lg:text-base transition
+  border-white/10 hover:scale-110
+  py-1 px-2 lg:py-2 lg:px-4 hover:bg-white/10
+`;
+const cls = className ? `${baseClass} ${className}` : baseClass;
 ---
 
-<a
-  href={href}
-  class="bg-white/5
-  rounded-full border
-  flex justify-center items-center gap-x-2
-  text-xs lg:text-base
-  transition
-  border-white/10 hover:scale-110
-   py-1 px-2 lg:py-2 lg:px-4 hover:bg-white/10"
->
+<a href={resolvedHref} target={target} rel={rel} class={cls}>
   <slot />
 </a>
