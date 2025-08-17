@@ -1,40 +1,46 @@
 ---
 interface Props {
   href?: string;
-  isOutLink?: boolean; // renombré a camelCase
+  newTab?: boolean;
   class?: string;
 }
 
 const {
   href = "#",
-  isOutLink = false,
+  newTab = false,
   class: className,
+  ...rest
 } = Astro.props as Props;
 
-// Si el link es interno, prefija BASE_URL (GitHub Pages)
 const isExternal =
   /^(https?:)?\/\//.test(href) ||
   href.startsWith("mailto:") ||
-  href.startsWith("tel:") ||
-  href.startsWith("#");
+  href.startsWith("tel:");
+const isHash = href.startsWith("#");
 
-const resolvedHref = isExternal
-  ? href
-  : `${import.meta.env.BASE_URL}${href.replace(/^\//, "")}`;
+const base = import.meta.env.BASE_URL; // "/" en dev, "/Portfolio/" en prod
+const baseIsRoot = !base || base === "/";
 
-const target = isOutLink ? "_blank" : undefined;
-const rel = isOutLink ? "noopener noreferrer" : undefined;
+// ¿El href ya viene con la base?
+const alreadyPrefixed = !baseIsRoot && href.startsWith(base);
 
-const baseClass = `
-  bg-white/5 rounded-full border
-  flex justify-center items-center gap-x-2
-  text-xs lg:text-base transition
-  border-white/10 hover:scale-110
-  py-1 px-2 lg:py-2 lg:px-4 hover:bg-white/10
-`;
-const cls = className ? `${baseClass} ${className}` : baseClass;
+// Construir href final:
+let resolvedHref = href;
+if (!isExternal && !isHash && !alreadyPrefixed) {
+  // prefija solo si NO venía con base
+  resolvedHref = `${base}${href.replace(/^\//, "")}`;
+}
+
+// target/rel
+const target = newTab ? "_blank" : undefined;
+const rel = newTab ? "noopener noreferrer" : undefined;
+
+// clases
+const baseCls =
+  "bg-white/5 rounded-full border flex justify-center items-center gap-x-2 text-xs lg:text-base transition border-white/10 hover:scale-110 py-1 px-2 lg:py-2 lg:px-4 hover:bg-white/10";
+const cls = className ? `${baseCls} ${className}` : baseCls;
 ---
 
-<a href={resolvedHref} target={target} rel={rel} class={cls}>
+<a href={resolvedHref} target={target} rel={rel} class={cls} {...rest}>
   <slot />
 </a>

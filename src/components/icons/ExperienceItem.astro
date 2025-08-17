@@ -30,7 +30,7 @@ const { title, description, link, date } = Astro.props;
 {
   link && (
     <div class="w-40">
-      <SocialPill isOutLink={true} href={link}>
+      <SocialPill newTab={true} href={link}>
         Learn more
         <svg
           class="w-3 h-3 ms-2 rtl:rotate-180"

@@ -5,7 +5,7 @@ import { Theme } from "./Theme";
 
 <!-- salto para accesibilidad -->
 <a
-  href="/#projects"
+  href=`${import.meta.env.BASE_URL}/#projects`
   class="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 bg-yellow-400/90 text-black px-3 py-1 rounded"
 >
   Skip to projects
@@ -65,10 +65,14 @@ import { Theme } from "./Theme";
   <!-- Nav mobile -->
   <nav id="mobileNav" class="md:hidden hidden px-4 pb-3" aria-label="Primary">
     <div class="flex flex-col gap-3">
-      <a class="navlink" href="/">Home</a>
-      <a class="navlink" href="/#experience">Experience</a>
-      <a class="navlink" href="/#projects">Projects</a>
-      <a class="navlink" href="/#contact">Contact</a>
+      <a class="navlink" href=`${import.meta.env.BASE_URL}/`>Home</a>
+      <a class="navlink" href=`${import.meta.env.BASE_URL}/#experience`
+        >Experience</a
+      >
+      <a class="navlink" href=`${import.meta.env.BASE_URL}/#projects`
+        >Projects</a
+      >
+      <a class="navlink" href=`${import.meta.env.BASE_URL}/#contact`>Contact</a>
     </div>
   </nav>
 </header>
@@ -91,33 +95,53 @@ import { Theme } from "./Theme";
     btn.setAttribute("aria-expanded", String(open));
   });
 
-  // Resalta link activo al hacer scroll por secciones
-  const map = new Map([
-    ["#experience", document.querySelector("#experience")],
-    ["#projects", document.querySelector("#projects")],
-    ["#contact", document.querySelector("#contact")],
-  ]);
+  // Activo por sección/hash o por path (Home)
   const links = Array.from(document.querySelectorAll("a.navlink"));
-  const setActive = (hash: string | null) => {
-    links.forEach((a) =>
-      a.setAttribute(
-        "aria-current",
-        a.getAttribute("href") === "/" + hash || a.getAttribute("href") === hash
-          ? "true"
-          : hash === "" && a.getAttribute("href") === "/"
-            ? "true"
-            : "false"
-      )
-    );
-  };
-  setActive(location.hash || ""); // estado inicial
+
+  const normalize = (p: string) => p.replace(/\/+$/, ""); // quita barras finales
+  const samePath = (a: string, b: string) => normalize(a) === normalize(b);
+
+  function applyActive() {
+    const curHash = window.location.hash || "";
+    const curPath = window.location.pathname;
+
+    links.forEach((a) => {
+      // Usamos la URL resuelta del anchor (maneja BASE_URL y relativos)
+      //@ts-ignore
+      const u = new URL(a.href, window.location.href);
+
+      let active = false;
+      if (u.hash) {
+        // Enlaces a secciones: compara solo el hash
+        active = u.hash === curHash;
+      } else {
+        // Home: no tiene hash; activa si el path del link == path actual y no hay hash
+        active = samePath(u.pathname, curPath) && curHash === "";
+      }
+
+      a.setAttribute("aria-current", active ? "true" : "false");
+    });
+  }
+
+  // Inicial + al cambiar hash + al hacer scroll (IO)
+  applyActive();
+  window.addEventListener("hashchange", applyActive);
+
+  const sections = ["experience", "projects", "contact"]
+    .map((id) => document.getElementById(id))
+    .filter(Boolean);
+
   const io = new IntersectionObserver(
     (entries) => {
-      entries.forEach((e) => {
-        if (e.isIntersecting) setActive("#" + e.target.id);
-      });
+      // actívate por la sección visible
+      const visible = entries.find((e) => e.isIntersecting);
+      if (visible) {
+        history.replaceState(null, "", "#" + visible.target.id);
+        applyActive();
+      }
     },
     { rootMargin: "-50% 0px -40% 0px", threshold: 0.01 }
   );
-  map.forEach((el) => el && io.observe(el));
+  //@ts-ignore
+  sections.forEach((el) => io.observe(el));
 </script>
